@@ -10,13 +10,17 @@ m = 2*bits_to_send-1;
 % and a negative box to represent a zero
 m_us = upsample(m, SymbolPeriod);
 m_boxy = conv(m_us, ones(SymbolPeriod, 1));
+figure(1)
 plot(m_boxy); % visualize the boxy signal
+title('M Boxy')
 
 % create a cosine with analog frequency f_c
 c = cos(2*pi*f_c/Fs*[0:length(m_boxy)-1]');
 % create the transmitted signal
 x_tx = m_boxy.*c;
+figure(2)
 plot(x_tx)  % visualize the transmitted signal
+title('Transmitted Signal')
 
 % create  noise-like signal 
 % to synchronize the transmission
