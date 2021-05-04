@@ -17,21 +17,14 @@ y_t = y_r(start_idx+length(x_sync):end); % y_t is the signal which starts at the
 % 1. multiply y_t by a cosine wave
 % 2. low pass filter 
 
-x = y_t(1: 4100) .* cos(2*pi*(f_c/Fs)*[0:4099]');
+x = y_t(1: 4100) .* cos(2.*pi.*f_c/Fs.*[0:4099]');
 % length(y_t)-1
-
 
 Xw = fft(x);
 O = linspace(-pi, pi - 2*pi/length(x), length(x));
 figure(1)
 plot(O, abs(Xw))
-title('ft of x')
-
-Y = fft(y_t);
-O2 = linspace(-pi, pi - 2*pi/length(Y), length(Y));
-figure(7)
-plot(O2,abs(Y))
-title('ft of yt')
+title
 
 t = [-100:1:99]*(1/Fs);
 W = 2*pi*1000; 
