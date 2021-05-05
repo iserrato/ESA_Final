@@ -1,6 +1,8 @@
 Fs = 8192;
 f_c = 1000;
 bits_to_send = StringToBits('Hello');
+figure(11)
+plot(bits_to_send)
 msg_length = length(bits_to_send)/8;
 SymbolPeriod = 100;
 
@@ -10,7 +12,7 @@ m = 2*bits_to_send-1;
 % and a negative box to represent a zero
 m_us = upsample(m, SymbolPeriod);
 m_boxy = conv(m_us, ones(SymbolPeriod, 1));
-figure(5)
+figure(10)
 plot(m_boxy); % visualize the boxy signal
 title('M Boxy')
 
@@ -18,6 +20,7 @@ title('M Boxy')
 c = cos(2*pi*f_c/Fs*[0:length(m_boxy)-1]');
 % create the transmitted signal
 x_tx = m_boxy.*c;
+X_TEST = x_tx;
 % figure(4)
 % plot(x_tx)  % visualize the transmitted signal
 % title('Transmitted Signal')
