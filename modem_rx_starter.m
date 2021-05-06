@@ -1,6 +1,6 @@
 
 % load short_modem_rx.mat
-load long_modem_rx.mat
+% load long_modem_rx.mat
 
 % The received signal includes a bunch of samples from before the
 % transmission started so we need discard the samples from before
@@ -49,7 +49,7 @@ x_d = m_shortened(50:100:end);
 
 final_message = BitsToString(x_d)
 %function to make all relevant plots
-% make_plots(msg_length, x,m,Fs, m_bin, x_d_sampled, x_d, y_t);
+make_plots(msg_length, x,m,Fs, m_bin, x_d, y_t);
 
 function [X, f] = plot_ft_rad(x, fs)
     % plots the magnitude of the Fourier transform of the signal x
@@ -89,14 +89,19 @@ function make_plots(msg_length, x,m,Fs, m_bin, x_d, y)
     plot(m)
     xlim([0 100*msg_length*8]);
     title('Plot of m, reconstructed signal');
+    xlabel('Samples')
+    ylabel('Amplitude')
     figure(4)
     plot_ft_rad(m,Fs);
     title('FFT of m');
     figure(5)
     plot(m_bin);
-    title('Restructured 1s and 0s from m');
+    title('Boxy Representation');
+    xlabel('Samples')
     figure(6)
-    plot(x_d_sampled);
-    title('Final Bits');
+    plot(x_d, 'x--');
+    title('Decoded Bits');
+    xlabel('Samples')
+    ylabel('Amplitude')
 end
 
