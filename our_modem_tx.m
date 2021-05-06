@@ -1,6 +1,7 @@
 Fs = 8192;
 f_c = 1000;
-bits_to_send = StringToBits('Declan and Isabel say hi! :D');
+bits_to_send = StringToBits('Some say the world will end in fire,\n Some say in ice.\n From what Ive tasted of desire\n I hold with those who favor fire.\n But if it had to perish twice,\n I think I know enough of hate\n To say that for destruction ice\n Is also great\n And would suffice.');
+
 figure(11)
 plot(bits_to_send)
 msg_length = length(bits_to_send)/8;
@@ -38,8 +39,9 @@ x_sync = x_sync/max(abs(x_sync))*0.5;
 x_tx = [x_sync;x_tx];
 save sync_noise.mat x_sync Fs msg_length
 % write the data to a file
-audiowrite('acoustic_modem_custom_tx.wav', x_tx, Fs);
+audiowrite('acoustic_modem_custom2_tx.wav', x_tx, Fs);
 
 
 % recorder = audiorecorder(Fs,8,1)
 
+%save('acoustic_file_3.mat', 'f_c', 'Fs', 'msg_length', 'x_sync', 'y_r')
