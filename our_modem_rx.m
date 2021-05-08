@@ -3,7 +3,7 @@
 % load acoustic_file_3.mat
 % load acoustic_file_3isabel.mat
 % load shorter_symbol_period.mat
-load 80_symbol_period.mat
+load 80_sym_take2.mat
 
 % The received signal includes a bunch of samples from before the
 % transmission started so we need discard the samples from before
@@ -20,11 +20,11 @@ y_t = y_r(start_idx+length(x_sync)+80:end); % y_t is the signal which starts at 
 %%  Put your decoder code here
 
 %multiply input signal by cosine
-x = y_t(1: 80*msg_length*8) .* -cos(2*pi*(f_c/Fs)*[0:80*msg_length*8 - 1]');
+x = y_t(1: 80*msg_length*8) .* cos(2*pi*(f_c/Fs)*[0:80*msg_length*8 - 1]');
 
 %create sinc function with cutoff frequency W
 t = [-50:1:49]*(1/Fs);
-W = 2*pi*2000; 
+W = 2*pi*10; 
 h = W/pi*sinc(W/pi*t);
 
 %convolve x and h
