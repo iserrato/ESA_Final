@@ -1,9 +1,10 @@
 
-load our_secret_message.mat
-% load frost_message.mat
-% load 50_symbol_period.mat
-% load 80_symbol_period.mat
-symbol_period = 100;
+% load acoustic_modem_take2.mat
+% load acoustic_file_3.mat
+% load acoustic_file_3isabel.mat
+% load shorter_symbol_period.mat
+load 80_sym_take2.mat
+
 % The received signal includes a bunch of samples from before the
 % transmission started so we need discard the samples from before
 % the transmission started.
@@ -12,18 +13,18 @@ start_idx = find_start_of_signal(y_r,x_sync);
 % start_idx now contains the location in y_r where x_sync begins
 % we need to offset by the length of x_sync to only include the signal
 % we are interested in
-y_t = y_r(start_idx+length(x_sync)+symbol_period:end); % y_t is the signal which starts at the beginning of the transmission
+y_t = y_r(start_idx+length(x_sync)+80:end); % y_t is the signal which starts at the beginning of the transmission
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Put your decoder code here
 
 %multiply input signal by cosine
-x = y_t(1: symbol_period*msg_length*8) .* cos(2*pi*(f_c/Fs)*[0:symbol_period*msg_length*8 - 1]');
+x = y_t(1: 80*msg_length*8) .* cos(2*pi*(f_c/Fs)*[0:80*msg_length*8 - 1]');
 
 %create sinc function with cutoff frequency W
 t = [-50:1:49]*(1/Fs);
-W = 2*pi*1000;
+W = 2*pi*100;
 h = W/pi*sinc(W/pi*t);
 
 %convolve x and h
@@ -43,7 +44,7 @@ m_bin(mneg) = 0;
 %convolution of x and h. Then sample between where every change should take
 %place, every 100 data points
 m_shortened = m_bin(50:end-50);
-x_d = m_shortened(symbol_period/2:symbol_period:end);
+x_d = m_shortened(40:80:end);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % convert to a string assuming that x_d is a vector of 1s and 0s
@@ -51,7 +52,7 @@ x_d = m_shortened(symbol_period/2:symbol_period:end);
 
 final_message = BitsToString(x_d)
 %function to make all relevant plots
-% make_plots(msg_length, x,m,Fs, m_bin, x_d, y_t);
+make_plots(msg_length, x,m,Fs, m_bin, x_d, y_t);
 
 function [X, f] = plot_ft_rad(x, fs)
     % plots the magnitude of the Fourier transform of the signal x
