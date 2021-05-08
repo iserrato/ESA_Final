@@ -24,7 +24,7 @@ x = y_t(1: 80*msg_length*8) .* -cos(2*pi*(f_c/Fs)*[0:80*msg_length*8 - 1]');
 
 %create sinc function with cutoff frequency W
 t = [-50:1:49]*(1/Fs);
-W = 2*pi*2000; 
+W = 2*pi*100; 
 h = W/pi*sinc(W/pi*t);
 
 %convolve x and h
