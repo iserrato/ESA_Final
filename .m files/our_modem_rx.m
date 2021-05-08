@@ -7,7 +7,7 @@ load 80_sym_take2.mat
 
 % The received signal includes a bunch of samples from before the
 % transmission started so we need discard the samples from before
-% the transmission started. 
+% the transmission started.
 
 start_idx = find_start_of_signal(y_r,x_sync);
 % start_idx now contains the location in y_r where x_sync begins
@@ -24,7 +24,7 @@ x = y_t(1: 80*msg_length*8) .* cos(2*pi*(f_c/Fs)*[0:80*msg_length*8 - 1]');
 
 %create sinc function with cutoff frequency W
 t = [-50:1:49]*(1/Fs);
-W = 2*pi*10; 
+W = 2*pi*100;
 h = W/pi*sinc(W/pi*t);
 
 %convolve x and h
@@ -56,12 +56,12 @@ make_plots(msg_length, x,m,Fs, m_bin, x_d, y_t);
 
 function [X, f] = plot_ft_rad(x, fs)
     % plots the magnitude of the Fourier transform of the signal x
-    % which is assumed to originate from a Continous-time signal 
+    % which is assumed to originate from a Continous-time signal
     % sampled with frequency fs
     % the function returns X and f.
     % In other words, this function plots the FT of the DT signal x
     % with the frequency axis labeled as if it were the original CT signal
-    % 
+    %
     % X contains the frequency response
     % f contains the frequency samples
 
@@ -69,13 +69,13 @@ function [X, f] = plot_ft_rad(x, fs)
     N = length(x);
 
     X = fftshift(fft(x));
-    
+
     % note that the frequency range here is from -fs/2*2*pi -> something
     % just a little bit less of fs/2*2*pi
-    % this is an artefact of the fact that we are actually computing a 
+    % this is an artefact of the fact that we are actually computing a
     % Discrete-Fourier-Transform (DFT) when we call FFT (which is a
     % numerical method to efficiently compute the DFT).
-    
+
     f = linspace(-fs/2*2*pi, 2*pi*fs/2- 2*pi*fs/length(x), length(x));
     plot(f, abs(X));
     xlabel('Frequency (rad/s)');
@@ -107,4 +107,3 @@ function make_plots(msg_length, x,m,Fs, m_bin, x_d, y)
     xlabel('Samples')
     ylabel('Amplitude')
 end
-
