@@ -1,9 +1,9 @@
 
-% load our_secret_message.mat
+load our_secret_message.mat
 % load frost_message.mat
 % load 50_symbol_period.mat
-load 80_symbol_period.mat
-symbol_period = 80;
+%load 80_symbol_period.mat
+symbol_period = 100;
 % The received signal includes a bunch of samples from before the
 % transmission started so we need discard the samples from before
 % the transmission started.
@@ -23,7 +23,7 @@ x = y_t(1: symbol_period*msg_length*8) .* cos(2*pi*(f_c/Fs)*[0:symbol_period*msg
 
 %create sinc function with cutoff frequency W
 t = [-50:1:49]*(1/Fs);
-W = 2*pi*10;
+W = 2*pi*1000;
 h = W/pi*sinc(W/pi*t);
 
 %convolve x and h
@@ -51,7 +51,7 @@ x_d = m_shortened(symbol_period/2:symbol_period:end);
 
 final_message = BitsToString(x_d)
 %function to make all relevant plots
-% make_plots(msg_length, x,m,Fs, m_bin, x_d, y_t);
+make_plots(msg_length, x,m,Fs, m_bin, x_d, y_t);
 
 function [X, f] = plot_ft_rad(x, fs)
     % plots the magnitude of the Fourier transform of the signal x
